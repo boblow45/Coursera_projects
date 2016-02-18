@@ -18,3 +18,12 @@ class QuickFind(object):
                 if self.Find_array[element] == p:
                     self.Find_array[element] = q
             return
+
+point_a = [2,3,3,7,9,0]
+point_b = [5,8,1,6,4,4]
+
+quickfind = QuickFind(10)
+for element in range(len(point_a)):
+    quickfind.Union(point_a[element], point_b[element])
+
+print str(quickfind.Find_array)
