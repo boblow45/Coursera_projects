@@ -1,4 +1,4 @@
-class Stack(object):
+class Queue(object):
     def __init__(self):
         self.s = [None]
         self.tail = 0
