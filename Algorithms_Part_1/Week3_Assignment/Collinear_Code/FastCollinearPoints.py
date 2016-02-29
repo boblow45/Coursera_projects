@@ -16,9 +16,7 @@ for element in range(len(results)):
         #   new.append("")
     results_int.append(new)
 
-print str(results_int) + "\n"
-
-
+#print str(results_int) + "\n"
 
 class FastCollinearPoints(object):
     def __init__(self, points):
@@ -28,6 +26,7 @@ class FastCollinearPoints(object):
         for element in range(1, self.N+1):
             array = [points[element][0],points[element][1], None, []]
             self.points.append(array)
+
             # points is an array of arrays. The array inside the array is made up of the following way
             # [x-point, y-point, slope with respect to point of interest,[list of all slopes of lines which this point is part of]]
     def FastCollinearPoints(self):
@@ -40,14 +39,22 @@ class FastCollinearPoints(object):
             # Go through each set of x and y coordinates, calculate the slope with respect to that point and save the slope
             # with that set of x and y coordinates in the self.points[element][2] location
             for w in range(j+1, self.N):
-                slope = (self.points[w][1] - self.points[j][1])/(self.points[w][0] - self.points[j][0])
+                slope = (self.points[w][1] - self.points[j][1])/float(self.points[w][0] - self.points[j][0])
+
+                if slope == -0.0:
+                    slope = -slope
                 self.points[w][2] = slope
             # sort the all points with respect to the slope
-            self.sort(self.points[j:])
+            print "following is the set of points to be sorted: " + str(self.points[j+1:])
+            self.sort(self.points[j+1:])
+            print  "Sort array has the following value: " + str(self.points[j+1:])
             # the folloing are required when trying to locate lines in the set of given x and y coordinates
             number_same_slope = 1
             pre_slope = None
+
+            print"self.points has the following values" + str(self.points)
             for element in range(j+1, self.N):
+                #print "number_same_slope has a values of: " + str(number_same_slope)
                 # if the current slow is different to previous point slope check reset counter for tracking point with the
                 # same slope. if the counter is 3 or greater log that set of points if has not been already logged
                 if pre_slope != self.points[element][2]:
@@ -69,7 +76,7 @@ class FastCollinearPoints(object):
                             # of lines as it has already be added.
                             if points_Not_in_line:
                                 #following line of code appends the points if a line is created
-                                append_array.append(self.points[x][0:1])
+                                append_array.append(self.points[x][0:2])
                                 self.points[x][3].append(pre_slope)
                         # if the slope is in the third element of the points array don't add the point to the list
                         # of lines as it has already be added.
@@ -84,7 +91,7 @@ class FastCollinearPoints(object):
         return len(self.linesegments)
 
     def Linesegment(self):
-        return  self.linesegments
+        return self.linesegments
 
     def __merge(self, a, lo, mid, hi):
 
@@ -124,4 +131,4 @@ class FastCollinearPoints(object):
 
 test = FastCollinearPoints(results_int)
 test.FastCollinearPoints()
-test.Linesegment()
+print "\n list of points on a straignt line: " + str(test.Linesegment())
