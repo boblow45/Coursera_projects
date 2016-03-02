@@ -110,6 +110,7 @@ class FastCollinearPoints(object):
         self.aux = [None]*N
         sz = 1
         sz_array = [1]
+        lo_array = [0]
 
         for x in range(len(a)):
             #print element
@@ -119,12 +120,20 @@ class FastCollinearPoints(object):
             else:
                 break
 
+
+            #if lo <
+            # might need to replace the iner for loop.
+            # it might be doing what it is bous to do
+
         for count in sz_array:
             for lo in range(0, N-count, count + count):
-                self.__merge(a, lo, lo + count-1, min(lo+count+count - 1, N-1))
-            print str(self.aux) + "\n"
-        sys.exit(-1)
+                self.__merge(a, lo, lo + count - 1, min(lo+count+count, N-1))
+            #print str(self.aux) + "\n"
+        #sys.exit(-1)
     def __merge(self, a, lo, mid, hi):
+        print "lo has a value of: " +str(lo)
+        print "mid has a value of: " +str(mid)
+        print "hi has a value of: " +str(hi) + "\n"
 
         self.aux = a[:]
 
